@@ -29,9 +29,6 @@ class Hunter:
                     headers={
                         "User-Agent": self.user_agent
                     },
-                    proxies={
-                        'https': self.proxy
-                    }
                 )
 
                 if response.status_code == 200:
