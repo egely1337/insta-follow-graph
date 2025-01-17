@@ -35,7 +35,7 @@ class Hunter:
                     json = response.json()
 
                     if json.get('status') != 'ok':
-                        raise Exception("Something gone wrong while retrieving info from Instagram.")
+                        continue
                     else:
                         return {
                             "followers": json.get('data').get('user').get('edge_followed_by').get('count'),
@@ -44,8 +44,10 @@ class Hunter:
                             "date": datetime.datetime.now()
                         }
                 else:
+                    time.sleep(10)
                     continue
             except Exception as e:
+                time.sleep(10)
                 continue
 
     def loop(self):
