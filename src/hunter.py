@@ -22,31 +22,33 @@ class Hunter:
             self.writer.writeheader()
 
     def get_account_info(self):
-        while 1:
-            try:
-                response = requests.get(
-                    url=f"https://i.instagram.com/api/v1/users/web_profile_info/?username={self.username}",
-                    headers={
-                        "User-Agent": self.user_agent
-                    },
-                )
+        try:
+            response = requests.get(
+                url=f"https://i.instagram.com/api/v1/users/web_profile_info/?username={self.username}",
+                headers={
+                    "User-Agent": self.user_agent
+                },
+                proxies={
+                    "https": self.proxy
+                }
+            )
 
-                if response.status_code == 200:
-                    json = response.json()
+            if response.status_code == 200:
+                json = response.json()
 
-                    if json.get('status') != 'ok':
-                        time.sleep(10)
-                    else:
-                        return {
-                            "followers": json.get('data').get('user').get('edge_followed_by').get('count'),
-                            "following": json.get('data').get('user').get('edge_follow').get('count'),
-                            "username": json.get('data').get('user').get('username'),
-                            "date": datetime.datetime.now()
-                        }
+                if json.get('status') != 'ok':
+                    raise Exception("Something happened while getting information from Instagram.")
                 else:
-                    time.sleep(10)
-            except Exception as e:
-                time.sleep(10)
+                    return {
+                        "followers": json.get('data').get('user').get('edge_followed_by').get('count'),
+                        "following": json.get('data').get('user').get('edge_follow').get('count'),
+                        "username": json.get('data').get('user').get('username'),
+                        "date": datetime.datetime.now()
+                    }
+            else:
+                raise Exception("Something happened while getting information from Instagram.")
+        except Exception as e:
+            print(e)
 
     def loop(self):
         while 1:
@@ -55,6 +57,6 @@ class Hunter:
                 self.writer.writerow(info)
                 self.file.flush()
                 print(info)
-                time.sleep(60)
+                time.sleep(60*5)
             except Exception as e:
                 print(e)
