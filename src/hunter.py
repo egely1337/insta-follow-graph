@@ -35,7 +35,7 @@ class Hunter:
                     json = response.json()
 
                     if json.get('status') != 'ok':
-                        continue
+                        time.sleep(10)
                     else:
                         return {
                             "followers": json.get('data').get('user').get('edge_followed_by').get('count'),
@@ -44,11 +44,11 @@ class Hunter:
                             "date": datetime.datetime.now()
                         }
                 else:
+                    print(response.json())
                     time.sleep(10)
-                    continue
             except Exception as e:
+                print(e)
                 time.sleep(10)
-                continue
 
     def loop(self):
         while 1:
