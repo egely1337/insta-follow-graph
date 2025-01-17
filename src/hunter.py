@@ -52,9 +52,9 @@ class Hunter:
         while 1:
             try:
                 info = self.get_account_info()
-                print(info)
                 self.writer.writerow(info)
                 self.file.flush()
-                time.sleep(5)
+                print(info)
+                time.sleep(60)
             except Exception as e:
                 print(e)
