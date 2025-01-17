@@ -57,6 +57,6 @@ class Hunter:
                 print(info)
                 self.writer.writerow(info)
                 self.file.flush()
-                time.sleep(60*5)
+                time.sleep(5)
             except Exception as e:
                 print(e)
