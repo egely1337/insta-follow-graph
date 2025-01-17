@@ -44,10 +44,8 @@ class Hunter:
                             "date": datetime.datetime.now()
                         }
                 else:
-                    print(response.json())
                     time.sleep(10)
             except Exception as e:
-                print(e)
                 time.sleep(10)
 
     def loop(self):
