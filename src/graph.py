@@ -9,7 +9,7 @@ def main() -> int:
     # load .env
     dotenv.load_dotenv()
     df = pd.read_csv(f"{os.getenv("TARGET_USERNAME")}.csv")
-    df["date"] = pd.to_datetime(df["date"], format="ISO8601")
+    df["date"] = pd.to_datetime(df["date"], format="mixed")
     fig, ax = plt.subplots()
     ax.plot(df["date"], df["followers"])
     ax.plot(df["date"], df["followers"])
