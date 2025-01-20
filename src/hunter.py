@@ -18,7 +18,7 @@ class Hunter:
         self.file = open(f'{self.username}.csv', 'a+', newline='')
         self.writer = csv.DictWriter(self.file, fieldnames=["username", "followers", "following", "date"])
         
-        if len(self.file.read()) < 1:
+        if len(open(f"{self.username}.csv").read()) < 2:
             self.writer.writeheader()
 
     def get_account_info(self):
